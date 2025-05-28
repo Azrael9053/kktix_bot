@@ -75,12 +75,12 @@ function startTicketScript() {
             }
         }
         // 自動刷新
-        // if (!found && setting.autoReload) {
-        //     console.log("沒有符合條件的票，準備自動重新整理...");
-        //     setTimeout(() => {
-        //         location.reload();
-        //     }, 100); // 延遲 100 豪秒避免過度刷新
-        // }
+        if (!found && setting.autoReload) {
+            console.log("沒有符合條件的票，準備自動重新整理...");
+            setTimeout(() => {
+                location.reload();
+            }, 100); // 延遲 100 豪秒避免過度刷新
+        }
     });
 }
 
