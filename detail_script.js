@@ -26,7 +26,7 @@ function startTicketScript() {
             const cleanName = name.replace(/\s+/g, "");
             const cleanPrice = price.replace(/,/g, "").replace(/\s+/g, "");
 
-           // 判斷 name 或 price 任一關鍵字有符合就成立
+            // 判斷 name 或 price 任一關鍵字有符合就成立
             const matchName = nameKeywords.some(keyword => cleanName.includes(keyword));
             const matchPrice = priceKeywords.some(keyword => cleanPrice.includes(keyword));
 
@@ -75,12 +75,12 @@ function startTicketScript() {
             }
         }
         // 自動刷新
-        if (!found && setting.autoReload) {
-            console.log("沒有符合條件的票，準備自動重新整理...");
-            setTimeout(() => {
-                location.reload();
-            }, 100); // 延遲 100 豪秒避免過度刷新
-        }
+        // if (!found && setting.autoReload) {
+        //     console.log("沒有符合條件的票，準備自動重新整理...");
+        //     setTimeout(() => {
+        //         location.reload();
+        //     }, 100); // 延遲 100 豪秒避免過度刷新
+        // }
     });
 }
 
@@ -108,6 +108,17 @@ function removeUnwantedTickets() {
         }
     });
 }
+
+
+function injectScript(filePath) {
+    const script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.src = chrome.runtime.getURL(filePath);  // 動態取得正確路徑
+    document.documentElement.appendChild(script);
+    script.remove();
+}
+
+injectScript("inject.js");
 
 
 // ✅ 等待票種載入才執行主程式

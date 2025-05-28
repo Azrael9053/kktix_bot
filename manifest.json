@@ -35,5 +35,15 @@
         "16": "kktix.png",
         "48": "kktix.png",
         "128": "kktix.png"
-    }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "inject.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
 }
