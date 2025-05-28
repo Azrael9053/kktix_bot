@@ -1,0 +1,34 @@
+{
+    "manifest_version": 3,
+    "name": "KKTIX Auto Ticket",
+    "version": "1.0",
+    "description": "自動搶票工具",
+    "permissions": [
+        "storage",
+        "scripting"
+    ],
+    "action": {
+        "default_title": "KKTIX Auto Ticket",
+        "default_popup": "options.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.kktix.cc/events/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://kktix.com/events/*/registrations/*"
+            ],
+            "js": [
+                "detail_script.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
+}

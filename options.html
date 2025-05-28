@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>設定搶票資訊</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            width: 480px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 20px;
+            color: #444;
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 14px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2b8ded;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1f6fd2;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>KKTIX 搶票設定</h2>
+
+        <label>搶票日期:
+            <input type="text" id="date" placeholder="例如：07/12">
+        </label>
+
+        <label>票價關鍵字:
+            <input type="text" id="price" placeholder="例如：3000">
+        </label>
+
+        <label>票種關鍵字（如：VIP）:
+            <input type="text" id="name" placeholder="例如：VIP">
+        </label>
+
+        <label>張數:
+            <input type="number" id="count" min="1" placeholder="例如：2">
+        </label>
+
+        <button id="save">💾 儲存</button>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+
+</html>
