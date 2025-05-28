@@ -30,5 +30,10 @@
             ],
             "run_at": "document_idle"
         }
-    ]
+    ],
+    "icons": {
+        "16": "kktix.png",
+        "48": "kktix.png",
+        "128": "kktix.png"
+    }
 }

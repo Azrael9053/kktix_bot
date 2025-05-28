@@ -1,6 +1,8 @@
 // console.log("✅ content.js loaded!");
 const description = document.querySelector(".description");
-description.remove();
+if (description) {
+    description.remove();
+}
 chrome.storage.local.get("kktix_settings", (data) => {
     console.log("讀取設定", data);
     const settings = data.kktix_settings;
