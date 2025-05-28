@@ -14,7 +14,7 @@ function startTicketScript() {
         const setting = data.kktix_settings;
 
         const ticketBoxes = document.querySelectorAll('.display-table');
-        let matched = false;
+        let found = false;
 
         for (const box of ticketBoxes) {
             const name = box.querySelector('.ticket-name')?.textContent.trim() || "";
@@ -27,6 +27,7 @@ function startTicketScript() {
 
             if (cleanName.includes(setting.name) || cleanPrice.includes(targetPrice)) {
                 console.log("✅ 找到票種", cleanName, cleanPrice);
+                found = true;
 
                 const plusButton = box.querySelector('.btn-default.plus');
 
@@ -42,7 +43,6 @@ function startTicketScript() {
                         }, i * 1);
                     }
 
-                    matched = true;
 
                     // 等票數點擊完後再勾條款與下一步
                     setTimeout(() => {
@@ -69,9 +69,12 @@ function startTicketScript() {
                 }
             }
         }
-
-        if (!matched) {
-            console.warn("⚠️ 沒有找到符合條件的票種");
+        // 自動刷新
+        if (!found && setting.autoReload) {
+            console.log("沒有符合條件的票，準備自動重新整理...");
+            setTimeout(() => {
+                location.reload();
+            }, 100); // 延遲 3 秒避免過度刷新
         }
     });
 }
