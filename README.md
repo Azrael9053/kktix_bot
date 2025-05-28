@@ -52,7 +52,7 @@
 ---
 
 ## 📁 專案結構
-
+```
 kktix-auto-ticket/
 │
 ├── manifest.json # Chrome 擴充功能設定
@@ -61,7 +61,7 @@ kktix-auto-ticket/
 ├── options.js # 設定儲存與載入邏輯
 ├── icon.png # 擴充功能圖示
 └── README.md # 本說明文件
-
+```
 ---
 
 ## 📜 授權
