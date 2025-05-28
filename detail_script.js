@@ -12,6 +12,9 @@ function simulateClick(element) {
 function startTicketScript() {
     chrome.storage.local.get("kktix_settings", (data) => {
         const setting = data.kktix_settings;
+        // 將 name 與 price 關鍵字用空格分割成陣列
+        const nameKeywords = (setting.name || "").split(/\s+/).filter(Boolean);
+        const priceKeywords = (setting.price || "").split(/\s+/).filter(Boolean);
 
         const ticketBoxes = document.querySelectorAll('.display-table');
         let found = false;
@@ -23,9 +26,11 @@ function startTicketScript() {
             const cleanName = name.replace(/\s+/g, "");
             const cleanPrice = price.replace(/,/g, "").replace(/\s+/g, "");
 
-            const targetPrice = setting.price.replace(/,/g, "");
+           // 判斷 name 或 price 任一關鍵字有符合就成立
+            const matchName = nameKeywords.some(keyword => cleanName.includes(keyword));
+            const matchPrice = priceKeywords.some(keyword => cleanPrice.includes(keyword));
 
-            if (cleanName.includes(setting.name) || cleanPrice.includes(targetPrice)) {
+            if (matchName || matchPrice) {
                 console.log("✅ 找到票種", cleanName, cleanPrice);
                 found = true;
 
@@ -74,7 +79,7 @@ function startTicketScript() {
             console.log("沒有符合條件的票，準備自動重新整理...");
             setTimeout(() => {
                 location.reload();
-            }, 100); // 延遲 3 秒避免過度刷新
+            }, 100); // 延遲 100 豪秒避免過度刷新
         }
     });
 }
