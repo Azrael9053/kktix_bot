@@ -5,8 +5,12 @@
     "description": "自動搶票工具",
     "permissions": [
         "storage",
+        "tabs",
         "scripting"
     ],
+    "background": {
+        "service_worker": "background.js"
+    },
     "action": {
         "default_title": "KKTIX Auto Ticket",
         "default_popup": "options.html"
@@ -45,5 +49,13 @@
                 "<all_urls>"
             ]
         }
-    ]
+    ],
+    "commands": {
+        "toggle-bot": {
+            "suggested_key": {
+                "default": "Ctrl+Space"
+            },
+            "description": "啟動或停止搶票機器人"
+        }
+    }
 }

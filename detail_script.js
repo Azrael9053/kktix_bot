@@ -10,8 +10,14 @@ function simulateClick(element) {
 
 // ✅ 主搶票程式
 function startTicketScript() {
-    chrome.storage.local.get("kktix_settings", (data) => {
+    chrome.storage.local.get(["kktix_settings", "botEnabled"], (data) => {
         const setting = data.kktix_settings;
+        const botEnabled = data.botEnabled;
+
+        if (!botEnabled) {
+            console.log("⏸️ 機器人目前關閉中，跳過搶票流程");
+            return;
+        }
         // 將 name 與 price 關鍵字用空格分割成陣列
         const nameKeywords = (setting.name || "").split(/\s+/).filter(Boolean);
         const priceKeywords = (setting.price || "").split(/\s+/).filter(Boolean);
@@ -19,7 +25,7 @@ function startTicketScript() {
         let ticketBoxes = Array.from(document.querySelectorAll('.display-table'));
         let found = false;
 
-        switch (setting.order) {
+        switch (setting.priceOrder) {
             case "bottom-up":
                 ticketBoxes.reverse();
                 break;
