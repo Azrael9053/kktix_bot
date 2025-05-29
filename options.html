@@ -36,7 +36,8 @@
         }
 
         input[type="text"],
-        input[type="number"] {
+        input[type="number"],
+        select {
             width: 100%;
             padding: 10px 14px;
             margin-top: 6px;
@@ -55,7 +56,7 @@
             border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 5px;
             transition: background-color 0.3s ease;
         }
 
@@ -94,6 +95,14 @@
         <label>張數:
             <input type="number" id="count" min="1" placeholder="例如：2">
             <small>格式：4</small>
+        </label>
+
+        <label>搜尋順序:
+            <select id="order">
+                <option value="top-down">由上至下</option>
+                <option value="bottom-up">由下至上</option>
+                <option value="middle">從中間開始</option>
+            </select>
         </label>
 
         <label>

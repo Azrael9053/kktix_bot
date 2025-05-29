@@ -16,19 +16,39 @@ function startTicketScript() {
         const nameKeywords = (setting.name || "").split(/\s+/).filter(Boolean);
         const priceKeywords = (setting.price || "").split(/\s+/).filter(Boolean);
 
-        const ticketBoxes = document.querySelectorAll('.display-table');
+        let ticketBoxes = Array.from(document.querySelectorAll('.display-table'));
         let found = false;
 
+        switch (setting.order) {
+            case "bottom-up":
+                ticketBoxes.reverse();
+                break;
+            case "middle":
+                const mid = Math.floor(ticketBoxes.length / 2);
+                ticketBoxes = [...ticketBoxes.slice(mid), ...ticketBoxes.slice(0, mid)];
+                break;
+            case "top-down":
+            default:
+                // 保持原本順序
+                break;
+        }
+
         for (const box of ticketBoxes) {
-            const name = box.querySelector('.ticket-name')?.textContent.trim() || "";
+            const name = box.querySelector('.ticket-name');
             const price = box.querySelector('.ticket-price')?.textContent.trim() || "";
 
-            const cleanName = name.replace(/\s+/g, "");
+            let cleanName = "";
+            for (const node of name.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    cleanName += node.textContent.trim();
+                }
+            }
+            cleanName = cleanName.replace(/\s+/g, " ").trim();
             const cleanPrice = price.replace(/,/g, "").replace(/\s+/g, "");
 
             // 判斷 name 或 price 任一關鍵字有符合就成立
-            const matchName = nameKeywords.some(keyword => cleanName.includes(keyword));
-            const matchPrice = priceKeywords.some(keyword => cleanPrice.includes(keyword));
+            const matchName = nameKeywords.length === 0 || nameKeywords.some(keyword => cleanName.includes(keyword));
+            const matchPrice = priceKeywords.length === 0 || priceKeywords.some(keyword => cleanPrice.includes(keyword));
 
             if (matchName || matchPrice) {
                 console.log("✅ 找到票種", cleanName, cleanPrice);
@@ -89,7 +109,7 @@ function removeUnwantedTickets() {
     if (wrapper) {
         wrapper.remove();
     }
-    const allTickets = document.querySelectorAll('.display-table');
+    const allTickets = document.querySelectorAll('.ticket-unit');
 
     allTickets.forEach(ticketBox => {
         const nameElement = ticketBox.querySelector('.ticket-name');
@@ -98,7 +118,7 @@ function removeUnwantedTickets() {
         const nameText = nameElement?.innerText.trim() || '';
         const soldOutText = soldOutElement?.innerText.trim() || '';
 
-        const nameKeywordsToExclude = ['輪椅', '身心障礙', '無障礙', "身障", "輪椅票", "身障票", "無障礙票", "輪椅票種", "身障票種", "無障礙票種"];
+        const nameKeywordsToExclude = ['輪椅', '身心障礙', '無障礙', "身障"];
         const isExcludedByName = nameKeywordsToExclude.some(keyword => nameText.includes(keyword));
         const isSoldOut = soldOutText.includes('已售完');
 

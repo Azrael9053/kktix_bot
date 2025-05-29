@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameInput = document.getElementById("name");
     const countInput = document.getElementById("count");
     const autoReloadInput = document.getElementById("autoReload");
+    const orderInput = document.getElementById("order");
 
     // 載入設定
     chrome.storage.local.get("kktix_settings", (data) => {
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             nameInput.value = settings.name || "";
             countInput.value = settings.count || 1;
             autoReloadInput.checked = settings.autoReload || false;
+            orderInput.value = settings.order || "top-down";
         } else {
             dateInput.placeholder = "例如：2025/06/01";
             priceInput.placeholder = "例如：3000 或 TWD$3,000";
@@ -28,11 +30,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const date = dateInput.value;
         const price = priceInput.value;
         const name = nameInput.value;
-        const count = parseInt(countInput.value);
+        const countRaw = parseInt(countInput.value);
         const autoReload = autoReloadInput.checked;
+        const order = orderInput.value;
+
+        if (!date.match(/^\d{2}\/\d{2}$/)) {
+            alert("請輸入正確的搶票日期格式，例如 07/20");
+            return;
+        }
+
+        const count = parseInt(countRaw, 10);
+        if (isNaN(count) || count <= 0) {
+            alert("請輸入正確的張數（大於 0）");
+            return;
+        }
 
         chrome.storage.local.set({
-            kktix_settings: { date, price, count, name, autoReload }
+            kktix_settings: { date, price, count, name, autoReload, order }
         }, () => {
             alert("設定已儲存！");
         });
